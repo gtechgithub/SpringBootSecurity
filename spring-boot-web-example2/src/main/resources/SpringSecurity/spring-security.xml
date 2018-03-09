@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:security="http://www.springframework.org/schema/security"
+
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+ http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+ http://www.springframework.org/schema/security
+ http://www.springframework.org/schema/security/spring-security-4.2.xsd">
+
+	<security:http auto-config="true">
+	    <security:intercept-url pattern="/" access="permitAll" />
+	    <security:intercept-url pattern="/resources/**" access="permitAll" />
+	    <security:intercept-url pattern="/j_spring_security_check" access="permitAll"/>
+	 	<security:intercept-url pattern="/login" access="permitAll" />
+	 	<security:intercept-url pattern="/welcome*" access="hasRole('ROLE_USER')"/>
+	 	<security:intercept-url pattern="/admin*" access="hasRole('ROLE_ADMIN')" />
+	    
+	    <!--  customize security form login  -->
+	    <security:form-login 
+	        login-page="/login" 
+	        authentication-failure-url="/login?error" 
+	        default-target-url="/index" 
+	        username-parameter="username" 
+	        password-parameter="password"  
+	        always-use-default-target="true"/>
+	        <!--  login-processing-url="j_spring_security_check.action"-->
+			
+		<security:logout logout-success-url="/login?logout" />
+
+	    <!--  enable csrf cross site request forgery protection 
+	    if csrf is enable then we need to use _csrf.token in the page you want to login or logout -->
+	    <security:csrf disabled="true"/>	
+	    
+	</security:http> 
+
+    <security:authentication-manager>
+	    <security:authentication-provider>
+		    <security:user-service>
+		    
+		   		 <security:user name="gopal" password="gopal" authorities="ROLE_USER"/>
+		    	 <security:user name="admin" password="admin" authorities="ROLE_ADMIN"/>
+		    </security:user-service>
+		    </security:authentication-provider>
+    </security:authentication-manager>
+    
+ </beans>

@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml" 
+    xmlns:th="http://www.thymeleaf.org" 
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<body onload='document.loginForm.username.focus()'>	
+
+	<h1>Spring Security custom login form(XML)!!</h1>
+	
+	<div>
+		<h2> login with user name and password</h2>
+		<div th:if ="${error != null}">
+			<div class="error" th:text="${error}"> </div>
+	    </div>
+	    
+	    <div th:if ="${msg != null}">
+			<div class="msg" th:text="${msg}"></div>
+	    </div>
+	    
+	    <form th:action="@{/j_spring_security_check}" method="post">
+			<input type='text' name='j_username' th:placeholder="username"/>
+			<input type='password' name='j_password' th:placeholder="Password"/>
+	        <button name="Submit" type="Submit" th:text="Login">
+	        </button>
+	        
+	    </form>
+    </div>	    
+</body>
+</html>
